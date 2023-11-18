@@ -17,31 +17,23 @@ router.post(
       if (!shop) {
         return next(new ErrorHandler("Shop Id is invalid!", 400));
       } else {
-        let images = [];
+        const images = Array.isArray(req.body.images)
+          ? req.body.images
+          : [req.body.images];
 
-        if (typeof req.body.images === "string") {
-          images.push(req.body.images);
-        } else {
-          images = req.body.images;
-        }
+        const imagesLinks = await Promise.all(
+          images.map(async (image) => {
+            const result = await cloudinary.v2.uploader.upload(image, {
+              folder: "products",
+            });
+            return {
+              public_id: result.public_id,
+              url: result.secure_url,
+            };
+          })
+        );
 
-        const imagesLinks = [];
-
-        for (let i = 0; i < images.length; i++) {
-          const result = await cloudinary.v2.uploader.upload(images[i], {
-            folder: "products",
-          });
-
-          imagesLinks.push({
-            public_id: result.public_id,
-            url: result.secure_url,
-          });
-        }
-
-        const productData = req.body;
-        productData.images = imagesLinks;
-        productData.shop = shop;
-
+        const productData = { ...req.body, images: imagesLinks, shop };
         const event = await Event.create(productData);
 
         res.status(201).json({
@@ -96,11 +88,11 @@ router.delete(
         return next(new ErrorHandler("Product is not found with this id", 404));
       }
 
-      for (let i = 0; 1 < product.images.length; i++) {
-        const result = await cloudinary.v2.uploader.destroy(
-          event.images[i].public_id
-        );
-      }
+      await Promise.all(
+        event.images.map(async (image) => {
+          await cloudinary.v2.uploader.destroy(image.public_id);
+        })
+      );
 
       await event.remove();
 

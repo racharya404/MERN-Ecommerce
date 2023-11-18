@@ -7,118 +7,83 @@ const Withdraw = require("../model/withdraw");
 const sendMail = require("../utils/sendMail");
 const router = express.Router();
 
-// create withdraw request --- only for seller
-router.post(
-  "/create-withdraw-request",
-  isSeller,
-  catchAsyncErrors(async (req, res, next) => {
+// Create withdraw request (only for seller)
+router.post("/create-withdraw-request", isSeller, catchAsyncErrors(async (req, res, next) => {
+  try {
+    const { amount } = req.body;
+    const data = { seller: req.seller, amount };
+
     try {
-      const { amount } = req.body;
+      // Send withdrawal request confirmation email to the seller
+      await sendMail({
+        email: req.seller.email,
+        subject: "Withdraw Request",
+        message: `Hello ${req.seller.name}, Your withdraw request of ${amount}$ is processing. It will take 3 to 7 days to process! `,
+      });
+      res.status(201).json({ success: true });
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
 
-      const data = {
-        seller: req.seller,
-        amount,
-      };
+    // Create withdraw record
+    const withdraw = await Withdraw.create(data);
 
-      try {
-        await sendMail({
-          email: req.seller.email,
-          subject: "Withdraw Request",
-          message: `Hello ${req.seller.name}, Your withdraw request of ${amount}$ is processing. It will take 3days to 7days to processing! `,
-        });
-        res.status(201).json({
-          success: true,
-        });
-      } catch (error) {
-        return next(new ErrorHandler(error.message, 500));
-      }
+    // Update shop's available balance
+    const shop = await Shop.findById(req.seller._id);
+    shop.availableBalance -= amount;
+    await shop.save();
 
-      const withdraw = await Withdraw.create(data);
+    res.status(201).json({ success: true, withdraw });
+  } catch (error) {
+    return next(new ErrorHandler(error.message, 500));
+  }
+}));
 
-      const shop = await Shop.findById(req.seller._id);
+// Get all withdraw requests (admin only)
+router.get("/get-all-withdraw-request", isAuthenticated, isAdmin("Admin"), catchAsyncErrors(async (req, res, next) => {
+  try {
+    // Retrieve all withdraw requests and sort by createdAt in descending order
+    const withdraws = await Withdraw.find().sort({ createdAt: -1 });
 
-      shop.availableBalance = shop.availableBalance - amount;
+    res.status(201).json({ success: true, withdraws });
+  } catch (error) {
+    return next(new ErrorHandler(error.message, 500));
+  }
+}));
 
-      await shop.save();
+// Update withdraw request (admin only)
+router.put("/update-withdraw-request/:id", isAuthenticated, isAdmin("Admin"), catchAsyncErrors(async (req, res, next) => {
+  try {
+    const { sellerId } = req.body;
 
-      res.status(201).json({
-        success: true,
-        withdraw,
+    // Update withdraw status to "succeed" and set updatedAt to current time
+    const withdraw = await Withdraw.findByIdAndUpdate(
+      req.params.id,
+      { status: "succeed", updatedAt: Date.now() },
+      { new: true }
+    );
+
+    // Update seller's transactions with the successful withdrawal
+    const seller = await Shop.findById(sellerId);
+    const transection = { _id: withdraw._id, amount: withdraw.amount, updatedAt: withdraw.updatedAt, status: withdraw.status };
+    seller.transections = [...seller.transections, transection];
+    await seller.save();
+
+    try {
+      // Send payment confirmation email to the seller
+      await sendMail({
+        email: seller.email,
+        subject: "Payment confirmation",
+        message: `Hello ${seller.name}, Your withdraw request of ${withdraw.amount}$ is on the way. Delivery time depends on your bank's rules, usually taking 3 to 7 days.`,
       });
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
     }
-  })
-);
 
-// get all withdraws --- admnin
-
-router.get(
-  "/get-all-withdraw-request",
-  isAuthenticated,
-  isAdmin("Admin"),
-  catchAsyncErrors(async (req, res, next) => {
-    try {
-      const withdraws = await Withdraw.find().sort({ createdAt: -1 });
-
-      res.status(201).json({
-        success: true,
-        withdraws,
-      });
-    } catch (error) {
-      return next(new ErrorHandler(error.message, 500));
-    }
-  })
-);
-
-// update withdraw request ---- admin
-router.put(
-  "/update-withdraw-request/:id",
-  isAuthenticated,
-  isAdmin("Admin"),
-  catchAsyncErrors(async (req, res, next) => {
-    try {
-      const { sellerId } = req.body;
-
-      const withdraw = await Withdraw.findByIdAndUpdate(
-        req.params.id,
-        {
-          status: "succeed",
-          updatedAt: Date.now(),
-        },
-        { new: true }
-      );
-
-      const seller = await Shop.findById(sellerId);
-
-      const transection = {
-        _id: withdraw._id,
-        amount: withdraw.amount,
-        updatedAt: withdraw.updatedAt,
-        status: withdraw.status,
-      };
-
-      seller.transections = [...seller.transections, transection];
-
-      await seller.save();
-
-      try {
-        await sendMail({
-          email: seller.email,
-          subject: "Payment confirmation",
-          message: `Hello ${seller.name}, Your withdraw request of ${withdraw.amount}$ is on the way. Delivery time depends on your bank's rules it usually takes 3days to 7days.`,
-        });
-      } catch (error) {
-        return next(new ErrorHandler(error.message, 500));
-      }
-      res.status(201).json({
-        success: true,
-        withdraw,
-      });
-    } catch (error) {
-      return next(new ErrorHandler(error.message, 500));
-    }
-  })
-);
+    res.status(201).json({ success: true, withdraw });
+  } catch (error) {
+    return next(new ErrorHandler(error.message, 500));
+  }
+}));
 
 module.exports = router;
