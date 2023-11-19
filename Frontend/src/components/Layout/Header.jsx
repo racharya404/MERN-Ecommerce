@@ -19,7 +19,7 @@ import OrgLogo from "../../resources/Images/KB.png";
 import { FaCaretSquareDown } from 'react-icons/fa';
 
 const Header = ({ activeHeading }) => {
-  const { isAuthenticated, user } = useSelector((state) => state.user);
+  const { isUser, user } = useSelector((state) => state.user);
   const { isSeller } = useSelector((state) => state.seller);
   const { wishlist } = useSelector((state) => state.wishlist);
   const { cart } = useSelector((state) => state.cart);
@@ -147,7 +147,7 @@ const Header = ({ activeHeading }) => {
 
             <div className={`${styles.commonFlex}`}>
               <div className="relative cursor-pointer mr-[15px]">
-                {isAuthenticated ? (
+                {isUser ? (
                   <Link to="/profile">
                     <img src={`${user?.avatar?.url}`} className="w-[35px] h-[35px] rounded-full" alt="" />
                   </Link>
@@ -228,7 +228,7 @@ const Header = ({ activeHeading }) => {
               </div>
 
               <div className="flex w-full justify-center">
-                {isAuthenticated ? (
+                {isUser ? (
                   <div>
                     <Link to="/profile">
                       <img src={`${user.avatar?.url}`} alt="" className="w-[60px] h-[60px] rounded-full border-[3px] border-[#0eae88]" />

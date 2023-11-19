@@ -3,7 +3,7 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const sendMail = require("../utils/sendMail");
 const Shop = require("../model/shop");
-const { isAuthenticated, isSeller, isAdmin } = require("../middleware/auth");
+const { isUser, isSeller, isAdmin } = require("../middleware/auth");
 const cloudinary = require("cloudinary");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const ErrorHandler = require("../utils/ErrorHandler");
@@ -286,7 +286,7 @@ router.put(
 // Get all sellers for admin
 router.get(
   "/admin-all-sellers",
-  isAuthenticated,
+  isUser,
   isAdmin("Admin"),
   catchAsyncErrors(async (req, res, next) => {
     try {
@@ -308,7 +308,7 @@ router.get(
 // Delete seller (admin only)
 router.delete(
   "/delete-seller/:id",
-  isAuthenticated,
+  isUser,
   isAdmin("Admin"),
   catchAsyncErrors(async (req, res, next) => {
     try {

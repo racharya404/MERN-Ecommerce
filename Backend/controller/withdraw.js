@@ -2,7 +2,7 @@ const Shop = require("../model/shop");
 const ErrorHandler = require("../utils/ErrorHandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const express = require("express");
-const { isSeller, isAuthenticated, isAdmin } = require("../middleware/auth");
+const { isSeller, isUser, isAdmin } = require("../middleware/auth");
 const Withdraw = require("../model/withdraw");
 const sendMail = require("../utils/sendMail");
 const router = express.Router();
@@ -40,7 +40,7 @@ router.post("/create-withdraw-request", isSeller, catchAsyncErrors(async (req, r
 }));
 
 // Get all withdraw requests (admin only)
-router.get("/get-all-withdraw-request", isAuthenticated, isAdmin("Admin"), catchAsyncErrors(async (req, res, next) => {
+router.get("/get-all-withdraw-request", isUser, isAdmin("Admin"), catchAsyncErrors(async (req, res, next) => {
   try {
     // Retrieve all withdraw requests and sort by createdAt in descending order
     const withdraws = await Withdraw.find().sort({ createdAt: -1 });
@@ -52,7 +52,7 @@ router.get("/get-all-withdraw-request", isAuthenticated, isAdmin("Admin"), catch
 }));
 
 // Update withdraw request (admin only)
-router.put("/update-withdraw-request/:id", isAuthenticated, isAdmin("Admin"), catchAsyncErrors(async (req, res, next) => {
+router.put("/update-withdraw-request/:id", isUser, isAdmin("Admin"), catchAsyncErrors(async (req, res, next) => {
   try {
     const { sellerId } = req.body;
 

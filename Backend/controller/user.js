@@ -6,7 +6,7 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const jwt = require("jsonwebtoken");
 const sendMail = require("../utils/sendMail");
 const sendToken = require("../utils/jwtToken");
-const { isAuthenticated, isAdmin } = require("../middleware/auth");
+const { isUser, isAdmin } = require("../middleware/auth");
 const User = require("../model/user");
 
 // Create user
@@ -89,7 +89,7 @@ router.post("/login-user", catchAsyncErrors(async (req, res, next) => {
 }));
 
 // Load user
-router.get("/getuser", isAuthenticated, catchAsyncErrors(async (req, res, next) => {
+router.get("/getuser", isUser, catchAsyncErrors(async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id);
 
@@ -114,7 +114,7 @@ router.get("/logout", catchAsyncErrors(async (req, res, next) => {
 }));
 
 // Update user info
-router.put("/update-user-info", isAuthenticated, catchAsyncErrors(async (req, res, next) => {
+router.put("/update-user-info", isUser, catchAsyncErrors(async (req, res, next) => {
   try {
     const { email, password, phoneNumber, name } = req.body;
 
@@ -143,7 +143,7 @@ router.put("/update-user-info", isAuthenticated, catchAsyncErrors(async (req, re
 }));
 
 // Update user avatar
-router.put("/update-avatar", isAuthenticated, catchAsyncErrors(async (req, res, next) => {
+router.put("/update-avatar", isUser, catchAsyncErrors(async (req, res, next) => {
   try {
     let existsUser = await User.findById(req.user.id);
     if (req.body.avatar !== "") {
@@ -165,7 +165,7 @@ router.put("/update-avatar", isAuthenticated, catchAsyncErrors(async (req, res, 
 }));
 
 // Update user addresses
-router.put("/update-user-addresses", isAuthenticated, catchAsyncErrors(async (req, res, next) => {
+router.put("/update-user-addresses", isUser, catchAsyncErrors(async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id);
     const sameTypeAddress = user.addresses.find((address) => address.addressType === req.body.addressType);
@@ -191,7 +191,7 @@ router.put("/update-user-addresses", isAuthenticated, catchAsyncErrors(async (re
 }));
 
 // Delete user address
-router.delete("/delete-user-address/:id", isAuthenticated, catchAsyncErrors(async (req, res, next) => {
+router.delete("/delete-user-address/:id", isUser, catchAsyncErrors(async (req, res, next) => {
   try {
     const userId = req.user._id;
     const addressId = req.params.id;
@@ -207,7 +207,7 @@ router.delete("/delete-user-address/:id", isAuthenticated, catchAsyncErrors(asyn
 }));
 
 // Update user password
-router.put("/update-user-password", isAuthenticated, catchAsyncErrors(async (req, res, next) => {
+router.put("/update-user-password", isUser, catchAsyncErrors(async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id).select("+password");
     const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
@@ -240,7 +240,7 @@ router.get("/user-info/:id", catchAsyncErrors(async (req, res, next) => {
 }));
 
 // Get all users for admin
-router.get("/admin-all-users", isAuthenticated, isAdmin("Admin"), catchAsyncErrors(async (req, res, next) => {
+router.get("/admin-all-users", isUser, isAdmin("Admin"), catchAsyncErrors(async (req, res, next) => {
   try {
     const users = await User.find().sort({ createdAt: -1 });
     res.status(201).json({ success: true, users });
@@ -250,7 +250,7 @@ router.get("/admin-all-users", isAuthenticated, isAdmin("Admin"), catchAsyncErro
 }));
 
 // Delete user (admin only)
-router.delete("/delete-user/:id", isAuthenticated, isAdmin("Admin"), catchAsyncErrors(async (req, res, next) => {
+router.delete("/delete-user/:id", isUser, isAdmin("Admin"), catchAsyncErrors(async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
 

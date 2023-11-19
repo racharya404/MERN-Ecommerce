@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { isSeller, isAuthenticated, isAdmin } = require("../middleware/auth");
+const { isSeller, isUser, isAdmin } = require("../middleware/auth");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const Product = require("../model/product");
 const Order = require("../model/order");
@@ -112,7 +112,7 @@ router.get(
 // Create or update a review for a product
 router.put(
   "/create-new-review",
-  isAuthenticated,
+  isUser,
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { user, rating, comment, productId, orderId } = req.body;
@@ -155,7 +155,7 @@ router.put(
 // Get all products for admin
 router.get(
   "/admin-all-products",
-  isAuthenticated,
+  isUser,
   isAdmin("Admin"),
   catchAsyncErrors(async (req, res, next) => {
     try {

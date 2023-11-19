@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const ErrorHandler = require("../utils/ErrorHandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
-const { isAuthenticated, isSeller, isAdmin } = require("../middleware/auth");
+const { isUser, isSeller, isAdmin } = require("../middleware/auth");
 const Order = require("../model/order");
 const Shop = require("../model/shop");
 const Product = require("../model/product");
@@ -218,7 +218,7 @@ router.put(
 // all orders --- for admin
 router.get(
   "/admin-all-orders",
-  isAuthenticated,
+  isUser,
   isAdmin("Admin"),
   catchAsyncErrors(async (req, res, next) => {
     try {

@@ -3,7 +3,7 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const Shop = require("../model/shop");
 const Event = require("../model/event");
 const ErrorHandler = require("../utils/ErrorHandler");
-const { isSeller, isAdmin, isAuthenticated } = require("../middleware/auth");
+const { isSeller, isAdmin, isUser } = require("../middleware/auth");
 const router = express.Router();
 const cloudinary = require("cloudinary");
 
@@ -109,7 +109,7 @@ router.delete(
 // all events --- for admin
 router.get(
   "/admin-all-events",
-  isAuthenticated,
+  isUser,
   isAdmin("Admin"),
   catchAsyncErrors(async (req, res, next) => {
     try {
