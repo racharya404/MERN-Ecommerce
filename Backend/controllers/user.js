@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 const cloudinary = require("cloudinary");
 const ErrorHandler = require("../utils/ErrorHandler");
-const catchAsyncErrors = require("../middleware/catchAsyncErrors");
+const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const jwt = require("jsonwebtoken");
-const sendMail = require("../utils/sendMail");
-const sendToken = require("../utils/jwtToken");
-const { isUser, isAdmin } = require("../middleware/auth");
-const User = require("../model/user");
+const deliverMail = require("../utils/deliverMail");
+const sendToken = require("../utils/Jwt");
+const { isUser, isAdmin } = require("../middlewares/auth");
+const User = require("../models/user");
 
 // Create user
 router.post("/create-user", catchAsyncErrors(async (req, res, next) => {
@@ -26,7 +26,7 @@ router.post("/create-user", catchAsyncErrors(async (req, res, next) => {
     const activationToken = createActivationToken(user);
     const activationUrl = `http://localhost:3000/activation/${activationToken}`;
 
-    await sendMail({ email: user.email, subject: "Activate your account", message: `Hello ${user.name}, please click on the link to activate your account: ${activationUrl}` });
+    await deliverMail({ email: user.email, subject: "Activate your account", message: `Hello ${user.name}, please click on the link to activate your account: ${activationUrl}` });
 
     res.status(201).json({ success: true, message: `Please check your email: ${user.email} to activate your account!` });
   } catch (error) {

@@ -1,5 +1,5 @@
 const express = require("express");
-const ErrorHandler = require("./middleware/error");
+const ErrorHandler = require("./middlewares/error");
 const app = express();
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
@@ -26,14 +26,14 @@ if (process.env.NODE_ENV !== "PRODUCTION") {
 }
 
 // import routes
-const user = require("./controller/user");
-const shop = require("./controller/shop");
-const product = require("./controller/product");
-const event = require("./controller/event");
-const coupon = require("./controller/voucherCode");
-const payment = require("./controller/payment");
-const order = require("./controller/order");
-const withdraw = require("./controller/withdraw");
+const user = require("./controllers/user");
+const shop = require("./controllers/shop");
+const product = require("./controllers/product");
+const event = require("./controllers/event");
+const coupon = require("./controllers/voucherCode");
+const payment = require("./controllers/payment");
+const order = require("./controllers/order");
+const withdraw = require("./controllers/withdraw");
 
 app.use("/api/v2/user", user);
 app.use("/api/v2/order", order);

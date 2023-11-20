@@ -1,10 +1,10 @@
-const Shop = require("../model/shop");
+const Shop = require("../models/shop");
 const ErrorHandler = require("../utils/ErrorHandler");
-const catchAsyncErrors = require("../middleware/catchAsyncErrors");
+const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const express = require("express");
-const { isSeller, isUser, isAdmin } = require("../middleware/auth");
-const Withdraw = require("../model/withdraw");
-const sendMail = require("../utils/sendMail");
+const { isSeller, isUser, isAdmin } = require("../middlewares/auth");
+const Withdraw = require("../models/withdraw");
+const deliverMail = require("../utils/deliverMail");
 const router = express.Router();
 
 // Create withdraw request (only for seller)
@@ -15,7 +15,7 @@ router.post("/create-withdraw-request", isSeller, catchAsyncErrors(async (req, r
 
     try {
       // Send withdrawal request confirmation email to the seller
-      await sendMail({
+      await deliverMail({
         email: req.seller.email,
         subject: "Withdraw Request",
         message: `Hello ${req.seller.name}, Your withdraw request of ${amount}$ is processing. It will take 3 to 7 days to process! `,
@@ -71,7 +71,7 @@ router.put("/update-withdraw-request/:id", isUser, isAdmin("Admin"), catchAsyncE
 
     try {
       // Send payment confirmation email to the seller
-      await sendMail({
+      await deliverMail({
         email: seller.email,
         subject: "Payment confirmation",
         message: `Hello ${seller.name}, Your withdraw request of ${withdraw.amount}$ is on the way. Delivery time depends on your bank's rules, usually taking 3 to 7 days.`,

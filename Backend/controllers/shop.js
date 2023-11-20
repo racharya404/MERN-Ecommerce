@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-const sendMail = require("../utils/sendMail");
-const Shop = require("../model/shop");
-const { isUser, isSeller, isAdmin } = require("../middleware/auth");
+const deliverMail = require("../utils/deliverMail");
+const Shop = require("../models/shop");
+const { isUser, isSeller, isAdmin } = require("../middlewares/auth");
 const cloudinary = require("cloudinary");
-const catchAsyncErrors = require("../middleware/catchAsyncErrors");
+const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const ErrorHandler = require("../utils/ErrorHandler");
-const sendShopToken = require("../utils/shopToken");
+const sendsellerToken = require("../utils/sellerToken");
 
 // Create shop
 router.post("/create-shop", catchAsyncErrors(async (req, res, next) => {
@@ -43,7 +43,7 @@ router.post("/create-shop", catchAsyncErrors(async (req, res, next) => {
 
     // Send activation email
     const activationUrl = `http://localhost:3000/seller/activation/${activationToken}`;
-    await sendMail({
+    await deliverMail({
       email: seller.email,
       subject: "Activate your Shop",
       message: `Hello ${seller.name}, please click on the link to activate your shop: ${activationUrl}`,
@@ -102,7 +102,7 @@ router.post(
       });
 
       // Send token for authentication
-      sendShopToken(seller, 201, res);
+      sendsellerToken(seller, 201, res);
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
     }
@@ -139,7 +139,7 @@ router.post(
       }
 
       // Send token for authentication
-      sendShopToken(user, 201, res);
+      sendsellerToken(user, 201, res);
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
     }

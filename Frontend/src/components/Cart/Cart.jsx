@@ -96,7 +96,7 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
   return (
     <div className="border-b p-4">
       <div className="w-full flex items-center">
-        <div className="bg-[#FAFAFA] flex flex-col items-center">
+        <div className="bg-[#FAFAFA] flex flex-col items-center min-width-[10px]">
           <button
             className="text-[#9E9E9E] pt-1 pl-2 pr-3 pb-1 font-bold  shadow-lg hover:opacity-75 transition duration-300 ease-in-out"
             onClick={() => updateQuantity(true)}

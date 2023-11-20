@@ -1,9 +1,9 @@
 const express = require("express");
-const catchAsyncErrors = require("../middleware/catchAsyncErrors");
-const Shop = require("../model/shop");
-const Event = require("../model/event");
+const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
+const Shop = require("../models/shop");
+const Event = require("../models/event");
 const ErrorHandler = require("../utils/ErrorHandler");
-const { isSeller, isAdmin, isUser } = require("../middleware/auth");
+const { isSeller, isAdmin, isUser } = require("../middlewares/auth");
 const router = express.Router();
 const cloudinary = require("cloudinary");
 
