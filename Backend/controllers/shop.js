@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-const deliverMail = require("../utils/deliverMail");
+const deliverMail = require("../utilities/deliverMail");
 const Shop = require("../models/shop");
 const { isUser, isSeller, isAdmin } = require("../middlewares/auth");
 const cloudinary = require("cloudinary");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
-const ErrorHandler = require("../utils/ErrorHandler");
-const sendsellerToken = require("../utils/sellerToken");
+const ErrorHandler = require("../utilities/ErrorHandler");
+const sendsellerToken = require("../utilities/sellerToken");
 
 // Create shop
 router.post("/create-shop", catchAsyncErrors(async (req, res, next) => {

@@ -1,7 +1,7 @@
 const express = require("express");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const Shop = require("../models/shop");
-const ErrorHandler = require("../utils/ErrorHandler");
+const ErrorHandler = require("../utilities/ErrorHandler");
 const { isSeller } = require("../middlewares/auth");
 const VoucherCode = require("../models/voucherCode");
 const router = express.Router();

@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const cloudinary = require("cloudinary");
-const ErrorHandler = require("../utils/ErrorHandler");
+const ErrorHandler = require("../utilities/ErrorHandler");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const jwt = require("jsonwebtoken");
-const deliverMail = require("../utils/deliverMail");
-const sendToken = require("../utils/Jwt");
+const deliverMail = require("../utilities/deliverMail");
+const sendToken = require("../utilities/Jwt");
 const { isUser, isAdmin } = require("../middlewares/auth");
 const User = require("../models/user");
 

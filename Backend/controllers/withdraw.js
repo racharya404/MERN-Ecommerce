@@ -1,10 +1,10 @@
 const Shop = require("../models/shop");
-const ErrorHandler = require("../utils/ErrorHandler");
+const ErrorHandler = require("../utilities/ErrorHandler");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const express = require("express");
 const { isSeller, isUser, isAdmin } = require("../middlewares/auth");
 const Withdraw = require("../models/withdraw");
-const deliverMail = require("../utils/deliverMail");
+const deliverMail = require("../utilities/deliverMail");
 const router = express.Router();
 
 // Create withdraw request (only for seller)
