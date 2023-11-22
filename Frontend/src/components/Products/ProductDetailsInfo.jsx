@@ -3,7 +3,6 @@ import styles from "../../styles/styles";
 import Ratings from "./Ratings";
 import { Link } from "react-router-dom";
 
-
 const ProductDetailsInfo = ({
     data,
     products,
@@ -98,7 +97,7 @@ const ProductDetailsInfo = ({
 
                     <div className="w-full flex justify-center">
                         {data && data.reviews.length === 0 && (
-                            <h5>No Reviews have for this product!</h5>
+                            <h5>No Reviews for this product!</h5>
                         )}
                     </div>
                 </div>

@@ -23,6 +23,7 @@ const ShopProfileData = ({ isOwner }) => {
   const allReviews =
     products && products.map((product) => product.reviews).flat();
 
+
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
@@ -113,7 +114,7 @@ const ShopProfileData = ({ isOwner }) => {
                     <Ratings rating={item.rating} />
                   </div>
                   <p className="font-[400] text-[#000000a7]">{item?.comment}</p>
-                  <p className="text-[#000000a7] text-[14px]">{"2days ago"}</p>
+                  <p className="text-[#000000a7] text-[14px]">{"2 days ago"}</p>
                 </div>
               </div>
             ))}
