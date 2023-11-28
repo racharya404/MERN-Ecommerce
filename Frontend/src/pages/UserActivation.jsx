@@ -6,7 +6,7 @@ import { server } from "../server";
 import { Link } from "react-router-dom";
 
 
-const ActivationPage = () => {
+const UserActivationPage = () => {
   const { activation_token } = useParams();
   const [error, setError] = useState(false);
 
@@ -52,4 +52,4 @@ const ActivationPage = () => {
   );
 };
 
-export default ActivationPage;
+export default UserActivationPage;

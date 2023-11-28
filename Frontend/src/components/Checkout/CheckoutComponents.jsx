@@ -26,7 +26,7 @@ export const ShippingInfo = ({
   };
 
   return (
-    <div className="w-full 800px:w-[95%] bg-white rounded-md p-5 pb-8">
+    <div className="w-full 800px:w-[95%] bg-white rounded-md p-5 pb-8 shadow-md">
       <h5 className="text-[18px] font-[500]">Shipping Address</h5>
       <br />
       <form>
@@ -111,30 +111,33 @@ export const ShippingInfo = ({
 
 export const CartData = ({ handleSubmit, totalPrice, shipping, subTotalPrice, couponCode, setCouponCode, discountPercentenge }) => {
   return (
-    <div className="w-full bg-[#fff] rounded-md p-5 pb-8">
+    <div className="w-full bg-[#fff] rounded-md p-5 pb-8 shadow-md">
       <div className="flex justify-between">
-        <h3 className="text-[16px] font-[400] text-[#000000a4]">subtotal:</h3>
+        <h3 className="text-[16px] font-[400] text-[#000000a4]">Original Price:</h3>
         <h5 className="text-[18px] font-[600]">Rs.{subTotalPrice}</h5>
       </div>
       <br />
       <div className="flex justify-between">
-        <h3 className="text-[16px] font-[400] text-[#000000a4]">shipping:</h3>
+        <h3 className="text-[16px] font-[400] text-[#000000a4]">Shipping Cost:</h3>
         <h5 className="text-[18px] font-[600]">Rs.{shipping.toFixed(2)}</h5>
       </div>
       <br />
       <div className="flex justify-between border-b pb-3">
-        <h3 className="text-[16px] font-[400] text-[#000000a4]">Discount:</h3>
+        <h3 className="text-[16px] font-[400] text-[#000000a4]">Discount Amount:</h3>
         <h5 className="text-[18px] font-[600]">
-          - {discountPercentenge ? "Rs." + discountPercentenge.toString() : null}
+          - {discountPercentenge ? "Rs." + discountPercentenge.toString() : "Rs.0.00"}
         </h5>
       </div>
-      <h5 className="text-[18px] font-[600] text-end pt-3">Rs.{totalPrice}</h5>
+      <div className="flex justify-between border-b pb-3">
+        <h3 className="text-[16px] font-[400] text-[#000000a4] mt-3">Total:</h3>
+        <h5 className="text-[18px] font-[600] text-end pt-3">Rs.{totalPrice}</h5>
+      </div>
       <br />
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           className={`${styles.input} h-[40px] pl-2`}
-          placeholder="Coupon code"
+          placeholder="Voucher Code"
           value={couponCode}
           onChange={(e) => setCouponCode(e.target.value)}
           required

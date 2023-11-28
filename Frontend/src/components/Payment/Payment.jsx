@@ -164,15 +164,15 @@ const Payment = () => {
     };
 
     await axios
-    .post(`${server}/order/create-order`, order, config)
-    .then((res) => {
-      setOpen(false);
-      navigate("/order/success");
-      toast.success("Order successful!");
-      localStorage.setItem("cartItems", JSON.stringify([]));
-      localStorage.setItem("latestOrder", JSON.stringify([]));
-      window.location.reload();
-    });
+      .post(`${server}/order/create-order`, order, config)
+      .then((res) => {
+        setOpen(false);
+        navigate("/order/success");
+        toast.success("Order successful!");
+        localStorage.setItem("cartItems", JSON.stringify([]));
+        localStorage.setItem("latestOrder", JSON.stringify([]));
+        window.location.reload();
+      });
   };
 
   return (
@@ -209,7 +209,7 @@ const PaymentInfo = ({
   const [select, setSelect] = useState(1);
 
   return (
-    <div className="w-full 800px:w-[95%] bg-[#fff] rounded-md p-5 pb-8">
+    <div className="w-full 800px:w-[95%] bg-[#fff] rounded-md p-5 pb-8 shadow-md">
       {/* select buttons */}
       <div>
         <div className="flex w-full pb-5 border-b mb-2">
@@ -356,18 +356,18 @@ const PaymentInfo = ({
                       onClick={() => setOpen(false)}
                     />
                   </div>
-                    <PayPalScriptProvider
-                      options={{
-                        "client-id":
-                          "Aczac4Ry9_QA1t4c7TKH9UusH3RTe6onyICPoCToHG10kjlNdI-qwobbW9JAHzaRQwFMn2-k660853jn",
-                      }}
-                    >
-                      <PayPalButtons
-                        style={{ layout: "vertical" }}
-                        onApprove={onApprove}
-                        createOrder={createOrder}
-                      />
-                    </PayPalScriptProvider>
+                  <PayPalScriptProvider
+                    options={{
+                      "client-id":
+                        "Aczac4Ry9_QA1t4c7TKH9UusH3RTe6onyICPoCToHG10kjlNdI-qwobbW9JAHzaRQwFMn2-k660853jn",
+                    }}
+                  >
+                    <PayPalButtons
+                      style={{ layout: "vertical" }}
+                      onApprove={onApprove}
+                      createOrder={createOrder}
+                    />
+                  </PayPalScriptProvider>
                 </div>
               </div>
             )}
@@ -412,20 +412,20 @@ const PaymentInfo = ({
 const CartData = ({ orderData }) => {
   const shipping = orderData?.shipping?.toFixed(2);
   return (
-    <div className="w-full bg-[#fff] rounded-md p-5 pb-8">
+    <div className="w-full bg-[#fff] rounded-md p-5 pb-8 shadow-md">
       <div className="flex justify-between">
-        <h3 className="text-[16px] font-[400] text-[#000000a4]">subtotal:</h3>
+        <h3 className="text-[16px] font-[400] text-[#000000a4]">Original Price:</h3>
         <h5 className="text-[18px] font-[600]">${orderData?.subTotalPrice}</h5>
       </div>
       <br />
       <div className="flex justify-between">
-        <h3 className="text-[16px] font-[400] text-[#000000a4]">shipping:</h3>
+        <h3 className="text-[16px] font-[400] text-[#000000a4]">Shipping Cost:</h3>
         <h5 className="text-[18px] font-[600]">${shipping}</h5>
       </div>
       <br />
       <div className="flex justify-between border-b pb-3">
-        <h3 className="text-[16px] font-[400] text-[#000000a4]">Discount:</h3>
-        <h5 className="text-[18px] font-[600]">{orderData?.discountPrice? "$" + orderData.discountPrice : "-"}</h5>
+        <h3 className="text-[16px] font-[400] text-[#000000a4]">Discount Amount:</h3>
+        <h5 className="text-[18px] font-[600]">{orderData?.discountPrice ? "$" + orderData.discountPrice : "-"}</h5>
       </div>
       <h5 className="text-[18px] font-[600] text-end pt-3">
         ${orderData?.totalPrice}

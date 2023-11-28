@@ -675,9 +675,9 @@ export const AdminSideBarItems = [
 
 //CheckOutSteps
 export const CheckOutSteps=[
-  { label: '1.Shipping', text: '1.Shipping' },
-  { label: '2.Payment', text: '2.Payment' },
-  { label: '3.Success', text: '3.Success' },
+  { label: 'Delivery', text: 'Delivery' },
+  { label: 'Payment', text: 'Payment' },
+  { label: 'Success', text: 'Success' },
 ]
 
 //SellerSideBarItems

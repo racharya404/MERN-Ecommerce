@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import styles from "../../styles/styles";
 import { ShippingInfo, CartData } from "./CheckoutComponents"; // Import the components from CheckoutComponents
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -78,7 +77,7 @@ const Checkout = () => {
     : (subTotalPrice + shipping).toFixed(2);
 
   return (
-    <div className="w-full flex flex-col items-center py-8">
+    <div className="w-full flex flex-col items-center py-8 ">
       <div className="w-[90%] 1000px:w-[70%] block 800px:flex">
         <div className="w-full 800px:w-[65%]">
           <ShippingInfo
@@ -107,10 +106,12 @@ const Checkout = () => {
             setCouponCode={setCouponCode}
             discountPercentenge={discountPercentenge}
           />
+          <div onClick={paymentSubmit}>
+            <div className=" mt-3 cursor-pointer w-full h-[30px] rounded-[3px] text-[#000000] bg-white font-[Poppins] text-[18px] text-center border-2 border-black hover:text-white hover:bg-black ">
+              Proceed To Payment
+            </div>
+          </div>
         </div>
-      </div>
-      <div className={`${styles.button} w-[150px] 800px:w-[280px] mt-10`} onClick={paymentSubmit}>
-        <h5 className="text-white">Go to Payment</h5>
       </div>
     </div>
   );
