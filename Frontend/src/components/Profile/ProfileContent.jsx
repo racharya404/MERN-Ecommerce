@@ -139,17 +139,6 @@ const ProfileContent = ({ active }) => {
                     onChange={(e) => setPhoneNumber(e.target.value)}
                   />
                 </div>
-
-                <div className=" w-[100%] 800px:w-[50%]">
-                  <label className="block pb-2">Enter your password</label>
-                  <input
-                    type="password"
-                    className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
               </div>
               <input
                 className={`w-[250px] h-[40px] border border-[#3a24db] text-center text-[#3a24db] rounded-[3px] mt-8 cursor-pointer`}
@@ -176,24 +165,24 @@ const ProfileContent = ({ active }) => {
         </div>
       )}
 
-      {/* Track order */}
+      {/*  user Address */}
+      {active === 4 && (
+        <div>
+          <Address />
+        </div>
+      )}
+
+      {/* Track Order
       {active === 5 && (
         <div>
           <TrackOrder />
         </div>
-      )}
+      )} */}
 
       {/* Change Password */}
       {active === 6 && (
         <div>
           <ChangePassword />
-        </div>
-      )}
-
-      {/*  user Address */}
-      {active === 7 && (
-        <div>
-          <Address />
         </div>
       )}
     </div>

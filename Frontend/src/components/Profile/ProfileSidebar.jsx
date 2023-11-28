@@ -34,9 +34,9 @@ const ProfileSidebar = ({ setActive, active }) => {
     { icon: <RxPerson size={20} />, title: "Profile" },
     { icon: <HiOutlineShoppingBag size={20} />, title: "Orders" },
     { icon: <HiOutlineReceiptRefund size={20} />, title: "Refunds" },
+    { icon: <TbAddressBook size={20} />, title: "Address" },
     { icon: <MdOutlineTrackChanges size={20} />, title: "Track Order" },
     { icon: <RiLockPasswordLine size={20} />, title: "Change Password" },
-    { icon: <TbAddressBook size={20} />, title: "Address" },
   ];
 
   return (
@@ -44,7 +44,7 @@ const ProfileSidebar = ({ setActive, active }) => {
       {sidebarItems.map((item, index) => (
         <div
           key={index}
-          className={`w-full active:border-2 active:border-black flex items-center p-2 justify-start  rounded-lg shadow-md cursor-pointer`}
+          className={`w-full  flex items-center p-2 justify-start  rounded-lg shadow-md cursor-pointer`}
           onClick={() => setActive(index + 1)}
         >
           {item.icon}
@@ -62,9 +62,9 @@ const ProfileSidebar = ({ setActive, active }) => {
             className={`w-full flex items-center p-2 justify-start cursor-pointer  rounded-lg shadow-md`}
             onClick={() => setActive(sidebarItems.length + 1)}
           >
-            <MdOutlineAdminPanelSettings size={20} color={active === 8 ? "red" : ""} />
+            <MdOutlineAdminPanelSettings size={20} color={active === 7 ? "red" : ""} />
             <span
-              className={`pl-3 ${active === 8 ? "text-[red]" : ""} 800px:block hidden`}
+              className={`pl-3 ${active === 7 ? "text-[red]" : ""} 800px:block hidden`}
             >
               Admin Dashboard
             </span>
