@@ -109,7 +109,7 @@ export const ShippingInfo = ({
   );
 };
 
-export const CartData = ({ handleSubmit, totalPrice, shipping, subTotalPrice, couponCode, setCouponCode, discountPercentenge }) => {
+export const CartData = ({ handleSubmit, totalPrice, shipping, subTotalPrice, voucherCode, setVoucherCode, discountPercentenge }) => {
   return (
     <div className="w-full bg-[#fff] rounded-md p-5 pb-8 shadow-md">
       <div className="flex justify-between">
@@ -138,8 +138,8 @@ export const CartData = ({ handleSubmit, totalPrice, shipping, subTotalPrice, co
           type="text"
           className={`${styles.input} h-[40px] pl-2`}
           placeholder="Voucher Code"
-          value={couponCode}
-          onChange={(e) => setCouponCode(e.target.value)}
+          value={voucherCode}
+          onChange={(e) => setVoucherCode(e.target.value)}
           required
         />
         <input

@@ -15,8 +15,8 @@ const Checkout = () => {
   const [address1, setAddress1] = useState("");
   const [address2, setAddress2] = useState("");
   const [zipCode, setZipCode] = useState(null);
-  const [couponCode, setCouponCode] = useState("");
-  const [couponCodeData, setCouponCodeData] = useState(null);
+  const [voucherCode, setVoucherCode] = useState("");
+  const [voucherCodeData, setVoucherCodeData] = useState(null);
   const [discountPrice, setDiscountPrice] = useState(null);
   const navigate = useNavigate();
 
@@ -40,39 +40,39 @@ const Checkout = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const name = couponCode;
+    const name = voucherCode;
 
     try {
-      const { data: { couponCode: couponData } } = await axios.get(`${server}/coupon/get-coupon-value/${name}`);
+      const { data: { voucherCode: voucherData } } = await axios.get(`${server}/voucher/get-voucher-value/${name}`);
 
-      if (!couponData) {
-        toast.error("Coupon code doesn't exist!");
-        setCouponCode("");
+      if (!voucherData) {
+        toast.error("Voucher code doesn't exist!");
+        setVoucherCode("");
         return;
       }
 
-      const shopId = couponData.shopId;
-      const isCouponValid = cart.filter((item) => item.shopId === shopId);
+      const shopId = voucherData.shopId;
+      const isVoucherValid = cart.filter((item) => item.shopId === shopId);
 
-      if (isCouponValid.length === 0) {
-        toast.error("Coupon code is not valid for this shop");
-        setCouponCode("");
+      if (isVoucherValid.length === 0) {
+        toast.error("Voucher code is not valid for this shop");
+        setVoucherCode("");
         return;
       }
 
-      const eligiblePrice = isCouponValid.reduce((acc, item) => acc + item.qty * item.discountPrice, 0);
-      const discountPrice = (eligiblePrice * couponData.value) / 100;
+      const eligiblePrice = isVoucherValid.reduce((acc, item) => acc + item.qty * item.discountPrice, 0);
+      const discountPrice = (eligiblePrice * voucherData.value) / 100;
       setDiscountPrice(discountPrice);
-      setCouponCodeData(couponData);
-      setCouponCode("");
+      setVoucherCodeData(voucherData);
+      setVoucherCode("");
     } catch (error) {
       console.error(error);
-      toast.error("An error occurred while processing the coupon code.");
+      toast.error("An error occurred while processing the voucher code.");
     }
   };
 
-  const discountPercentenge = couponCodeData ? discountPrice : "";
-  const totalPrice = couponCodeData
+  const discountPercentenge = voucherCodeData ? discountPrice : "";
+  const totalPrice = voucherCodeData
     ? (subTotalPrice + shipping - discountPercentenge).toFixed(2)
     : (subTotalPrice + shipping).toFixed(2);
 
@@ -102,8 +102,8 @@ const Checkout = () => {
             totalPrice={totalPrice}
             shipping={shipping}
             subTotalPrice={subTotalPrice}
-            couponCode={couponCode}
-            setCouponCode={setCouponCode}
+            voucherCode={voucherCode}
+            setVoucherCode={setVoucherCode}
             discountPercentenge={discountPercentenge}
           />
           <div onClick={paymentSubmit}>

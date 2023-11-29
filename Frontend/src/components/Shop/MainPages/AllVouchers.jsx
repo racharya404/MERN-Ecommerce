@@ -27,12 +27,12 @@ const AllVouchers = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`${server}/coupon/get-coupon/${seller._id}`, {
+      .get(`${server}/voucher/get-voucher/${seller._id}`, {
         withCredentials: true,
       })
       .then((res) => {
         setIsLoading(false);
-        setVouchers(res.data.couponCodes);
+        setVouchers(res.data.voucherCodes);
       })
       .catch((error) => {
         setIsLoading(false);
@@ -40,8 +40,8 @@ const AllVouchers = () => {
   }, [dispatch]);
 
   const handleDelete = async (id) => {
-    axios.delete(`${server}/coupon/delete-coupon/${id}`,{withCredentials: true}).then((res) => {
-      toast.success("Coupon code deleted succesfully!")
+    axios.delete(`${server}/voucher/delete-voucher/${id}`,{withCredentials: true}).then((res) => {
+      toast.success("Voucher code deleted succesfully!")
     })
     window.location.reload();
   };
@@ -51,7 +51,7 @@ const AllVouchers = () => {
 
     await axios
       .post(
-        `${server}/coupon/create-coupon-code`,
+        `${server}/voucher/create-voucher-code`,
         {
           name,
           minAmount,
@@ -63,7 +63,7 @@ const AllVouchers = () => {
         { withCredentials: true }
       )
       .then((res) => {
-       toast.success("Coupon code created successfully!");
+       toast.success("Voucher code created successfully!");
        setOpen(false);
        window.location.reload();
       })
@@ -76,7 +76,7 @@ const AllVouchers = () => {
     { field: "id", headerName: "Id", minWidth: 150, flex: 0.7 },
     {
       field: "name",
-      headerName: "Coupon Code",
+      headerName: "Voucher Code",
       minWidth: 180,
       flex: 1.4,
     },
@@ -124,13 +124,13 @@ const AllVouchers = () => {
       ) : (
         <div className="w-full flex justify-center ">
         <div className="w-[97%]">
-          <h3 className="text-[22px] font-Poppins ">All Coupons</h3>
+          <h3 className="text-[22px] font-Poppins ">All Vouchers</h3>
           <div className="w-full flex justify-end m-1">
             <div
               className=" bg-white hover:bg-orange-500 border-2 border-orange-500 text-black hover:text-white px-2 py-1 text-center text-base inline-block font-medium rounded-md cursor-pointer mr-auto"
               onClick={() => setOpen(true)}
             >
-              <span className="text-black">Create Coupon Code</span>
+              <span className="text-black">Create Voucher Code</span>
             </div>
           </div>
           <div className="w-full min-h-[27vh] bg-white rounded">
@@ -154,7 +154,7 @@ const AllVouchers = () => {
                   />
                 </div>
                 <h5 className="text-[30px] font-Poppins text-center">
-                  Create Coupon code
+                  Create Voucher code
                 </h5>
                 {/* create coupoun code */}
                 <form onSubmit={handleSubmit}>
@@ -170,7 +170,7 @@ const AllVouchers = () => {
                       value={name}
                       className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                       onChange={(e) => setName(e.target.value)}
-                      placeholder="Enter your coupon code name..."
+                      placeholder="Enter your voucher code name..."
                     />
                   </div>
                   <br />
@@ -186,7 +186,7 @@ const AllVouchers = () => {
                       required
                       className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                       onChange={(e) => setValue(e.target.value)}
-                      placeholder="Enter your coupon code value..."
+                      placeholder="Enter your voucher code value..."
                     />
                   </div>
                   <br />
@@ -198,7 +198,7 @@ const AllVouchers = () => {
                       value={minAmount}
                       className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                       onChange={(e) => setMinAmout(e.target.value)}
-                      placeholder="Enter your coupon code min amount..."
+                      placeholder="Enter your voucher code min amount..."
                     />
                   </div>
                   <br />
@@ -210,7 +210,7 @@ const AllVouchers = () => {
                       value={maxAmount}
                       className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                       onChange={(e) => setMaxAmount(e.target.value)}
-                      placeholder="Enter your coupon code max amount..."
+                      placeholder="Enter your voucher code max amount..."
                     />
                   </div>
                   <br />

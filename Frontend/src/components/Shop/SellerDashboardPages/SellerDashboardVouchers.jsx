@@ -1,7 +1,7 @@
 import React from 'react'
 import DashboardHeader from '../MainPages/Header'
 import DashboardSideBar from '../MainPages/SideBar'
-import AllCoupons from "../MainPages/AllVouchers";
+import AllVouchers from "../MainPages/AllVouchers";
 
 const SellerDashboardVouchers = () => {
   return (
@@ -12,7 +12,7 @@ const SellerDashboardVouchers = () => {
               <DashboardSideBar active={8} />
             </div>
             <div className="w-full justify-center flex">
-                <AllCoupons />
+                <AllVouchers />
             </div>
           </div>
     </div>
