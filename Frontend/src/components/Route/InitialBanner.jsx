@@ -4,7 +4,7 @@ import styles from "../../styles/styles";
 import BI from "../../resources/Images/BI.png"
 
 
-const Hero = () => {
+const InitialBanner = () => {
   return (
     <>
       <Link to="/products" classNmae="cursor-pointer">
@@ -31,4 +31,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default InitialBanner;

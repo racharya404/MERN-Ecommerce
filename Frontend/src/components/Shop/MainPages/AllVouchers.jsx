@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "../../../styles/styles";
 import Loader from "../../Layout/Loader";
 import { server } from "../../../server";
 import { toast } from "react-toastify";

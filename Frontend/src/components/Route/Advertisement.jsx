@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../../styles/styles";
 
-const Sponsored = () => {
+const Advertisement = () => {
   return (
     <div
       className={`${styles.section} hidden sm:block bg-white py-5 px-5 mb-6 cursor-pointer rounded-xl`}
@@ -20,4 +20,4 @@ const Sponsored = () => {
   );
 };
 
-export default Sponsored;
+export default Advertisement;

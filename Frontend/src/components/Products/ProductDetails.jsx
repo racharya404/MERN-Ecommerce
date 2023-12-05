@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AiFillHeart, AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { getAllProductsShop } from "../../redux/actions/product";
 import { addToWishlist, removeFromWishlist } from "../../redux/actions/wishlist";
 import { addTocart } from "../../redux/actions/cart";

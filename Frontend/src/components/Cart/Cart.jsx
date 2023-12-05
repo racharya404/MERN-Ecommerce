@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import { IoBagHandleOutline } from "react-icons/io5";
-import { HiOutlineMinus, HiPlus } from "react-icons/hi";
 import styles from "../../styles/styles";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -49,14 +48,6 @@ const Cart = ({ setOpenCart }) => {
                   />
                 </>
               ))}
-              {/* {cart && cart.map((item, index) => (
-                  <CartSingle
-                    key={index}
-                    data={item}
-                    quantityChangeHandler={quantityChangeHandler}
-                    removeFromCartHandler={removeFromCartHandler}
-                  />
-                ))} */}
             </div>
           </div>
           <div className="px-5 mb-3">
@@ -126,4 +117,4 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
   );
 };
 
-export default Cart
+export default Cart;

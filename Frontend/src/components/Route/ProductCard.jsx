@@ -1,30 +1,13 @@
 import React, { useState } from "react";
-import {
-  AiFillHeart,
-  AiFillStar,
-  AiOutlineEye,
-  AiOutlineHeart,
-  AiOutlineShoppingCart,
-  AiOutlineStar,
-} from "react-icons/ai";
 import { Link } from "react-router-dom";
 import styles from "../../styles/styles";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  addToWishlist,
-  removeFromWishlist,
-} from "../../redux/actions/wishlist";
+import {  useSelector } from "react-redux";
 import { useEffect } from "react";
-import { addTocart } from "../../redux/actions/cart";
-import { toast } from "react-toastify";
 import Ratings from "../Products/Ratings";
 
 const ProductCard = ({ data, isEvent }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
-  const { cart } = useSelector((state) => state.cart);
   const [click, setClick] = useState(false);
-  const [open, setOpen] = useState(false);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (wishlist && wishlist.find((i) => i._id === data._id)) {
@@ -33,11 +16,6 @@ const ProductCard = ({ data, isEvent }) => {
       setClick(false);
     }
   }, [wishlist]);
-
-  const removeFromWishlistHandler = (data) => {
-    setClick(!click);
-    dispatch(removeFromWishlist(data));
-  };
 
   
 
