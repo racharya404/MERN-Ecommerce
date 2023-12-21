@@ -610,54 +610,54 @@ export const footerProductLinks = [
 export const footercompanyLinks = [
   {
     name: "Gears",
-    link:"/products?category=Gears"
+    link: "/products?category=Gears"
   },
   {
     name: "Phones and Tablets",
-    link:"/products?category=Mobile/Tablets"
+    link: "/products?category=Mobile/Tablets"
   },
   {
     name: "Computers",
-    link:"/products?category=Computers"
+    link: "/products?category=Computers"
   },
   {
     name: "Gifts",
-    link:"/products?category=Gifts"
+    link: "/products?category=Gifts"
   },
   {
     name: "Events",
-    link:"/products"
+    link: "/products"
   },
   {
     name: "Pet Care",
-    link:"/products?category=Pet%20Care"
+    link: "/products?category=Pet%20Care"
   },
   {
     name: "Accessories",
-    link:"/products?category=Accesories"
+    link: "/products?category=Accesories"
   },
   {
     name: "Cloths",
-    link:"/products?category=Cloths"
+    link: "/products?category=Cloths"
   },
   {
-    name:"Cosmetics",
-    link:"/products?category=Cosmetics"
+    name: "Cosmetics",
+    link: "/products?category=Cosmetics"
   }
 ];
 
 export const footerSupportLinks = [
   {
     name: "FAQ",
-    link:"/faq"
+    link: "/faq"
   },
   {
     name: "Reviews",
-    link:"/reviews"
+    link: "/reviews"
   },
   {
     name: "Contact Us",
-    link:"/contact"
+    link: "/contact"
   },
 ];
 
@@ -674,7 +674,7 @@ export const AdminSideBarItems = [
 ];
 
 //CheckOutSteps
-export const CheckOutSteps=[
+export const CheckOutSteps = [
   { label: 'Delivery', text: 'Delivery' },
   { label: 'Payment', text: 'Payment' },
   { label: 'Success', text: 'Success' },
@@ -691,6 +691,6 @@ export const SellerSideBarItems = [
   { title: "Withdraw Money", url: "/dashboard-withdraw-money" },
   { title: "Discount Codes", url: "/dashboard-vouchers" },
   { title: "Refunds", url: "/dashboard-refunds" },
-  { title: "Settings", url: "/settings" },
+  { title: "Settings", url: "/settings" }
 ];
 

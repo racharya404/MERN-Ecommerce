@@ -140,8 +140,8 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route path="/shop/preview/:id" element={<ShopPreviewPage />} />
         {/* shop Routes */}
+        <Route path="/shop/preview/:id" element={<ShopPreviewPage />} />
         <Route path="/shop-create" element={<PgCreateShop />} />
         <Route path="/shop-login" element={<PgShopLogin />} />
         <Route

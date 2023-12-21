@@ -12,7 +12,7 @@ const User = require("../models/user");
 // Create user
 router.post("/create-user", catchAsyncErrors(async (req, res, next) => {
   try {
-    const { name, email, password, avatar } = req.body;
+    const { email, name, password, avatar } = req.body;
     const userEmail = await User.findOne({ email });
 
     if (userEmail) {
@@ -21,7 +21,7 @@ router.post("/create-user", catchAsyncErrors(async (req, res, next) => {
 
     const myCloud = await cloudinary.v2.uploader.upload(avatar, { folder: "avatars" });
 
-    const user = { name, email, password, avatar: { public_id: myCloud.public_id, url: myCloud.secure_url } };
+    const user = { email, name, password, avatar: { public_id: myCloud.public_id, url: myCloud.secure_url } };
 
     const activationToken = createActivationToken(user);
     const activationUrl = `http://localhost:3000/activation/${activationToken}`;
@@ -30,6 +30,7 @@ router.post("/create-user", catchAsyncErrors(async (req, res, next) => {
 
     res.status(201).json({ success: true, message: `Please check your email: ${user.email} to activate your account!` });
   } catch (error) {
+    console.log(error);
     return next(new ErrorHandler(error.message, 400));
   }
 }));
@@ -169,7 +170,7 @@ router.put("/update-user-addresses", isUser, catchAsyncErrors(async (req, res, n
   try {
     const user = await User.findById(req.user.id);
     const sameTypeAddress = user.addresses.find((address) => address.addressType === req.body.addressType);
-    
+
     if (sameTypeAddress) {
       return next(new ErrorHandler(`${req.body.addressType} address already exists`));
     }
@@ -219,7 +220,7 @@ router.put("/update-user-password", isUser, catchAsyncErrors(async (req, res, ne
     if (req.body.newPassword !== req.body.confirmPassword) {
       return next(new ErrorHandler("Passwords don't match", 400));
     }
-    
+
     user.password = req.body.newPassword;
     await user.save();
 

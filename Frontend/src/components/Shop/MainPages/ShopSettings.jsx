@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {  server } from "../../../server";
+import { server } from "../../../server";
 import { AiOutlineCamera } from "react-icons/ai";
 import styles from "../../../styles/styles";
 import axios from "axios";
 import { loadSeller } from "../../../redux/actions/user";
 import { toast } from "react-toastify";
+import ConfirmationDialog from "../../Confirmation/ConfirmationDialog";
 
 const ShopSettings = () => {
   const { seller } = useSelector((state) => state.seller);
   const [avatar, setAvatar] = useState();
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [showUpdateInfo, setshowUpdateInfo] = useState(false);
   const [name, setName] = useState(seller && seller.name);
   const [description, setDescription] = useState(
     seller && seller.description ? seller.description : ""
@@ -45,6 +48,37 @@ const ShopSettings = () => {
     };
 
     reader.readAsDataURL(e.target.files[0]);
+  };
+
+  const handleUpdateInfoBTN = () => {
+    if (!showUpdateInfo) {
+      setshowUpdateInfo(true);
+      setShowConfirmation(false);
+    }
+    else {
+      setshowUpdateInfo(false);
+    }
+  }
+
+  const handleLogOutClick = () => {
+    if (!showConfirmation) {
+      setShowConfirmation(true);
+      setshowUpdateInfo(false);
+    }
+    else {
+      setShowConfirmation(false);
+    }
+  };
+
+  const handleLogOutCancel = () => {
+    setShowConfirmation(false);
+  };
+
+
+  const logoutHandler = async () => {
+    axios.get(`${server}/shop/logout`, {
+      withCredentials: true,
+    }); window.location.reload();
   };
 
   const updateHandler = async (e) => {
@@ -94,94 +128,119 @@ const ShopSettings = () => {
             </div>
           </div>
         </div>
+        <div className=" cursor-pointer w-[100%] flex ml-[190px] items-center flex-col 800px:w-[50%] mt-5"
+          onClick={handleLogOutClick}
+        >
+          <span className={`${styles.input} text-center !w-[95%] mb-4 800px:mb-0`}>Log Out</span>
+        </div>
+
+        {showConfirmation && (
+          <ConfirmationDialog
+            message="Log out from this shop"
+            onConfirm={logoutHandler}
+            onCancel={handleLogOutCancel}
+          />
+        )}
+        {!showUpdateInfo && (
+          <div className=" cursor-pointer w-[100%] flex ml-[190px] items-center flex-col 800px:w-[50%] mt-5"
+            onClick={handleUpdateInfoBTN}
+          >
+            <span className={`${styles.input} text-center !w-[95%] mb-4 800px:mb-0`}>Update Shop Information</span>
+          </div>
+        )}
+
+
 
         {/* shop info */}
-        <form
-          aria-aria-required={true}
-          className="flex flex-col items-center"
-          onSubmit={updateHandler}
-        >
-          <div className="w-[100%] flex items-center flex-col 800px:w-[50%] mt-5">
-            <div className="w-full pl-[3%]">
-              <label className="block pb-2">Shop Name</label>
+        {showUpdateInfo && (
+          <form
+            aria-aria-required={true}
+            className="flex flex-col items-center"
+            onSubmit={updateHandler}
+          >
+            <div className="w-[100%] flex items-center flex-col 800px:w-[50%] mt-5">
+              <div className="w-full pl-[3%]">
+                <label className="block pb-2">Shop Name</label>
+              </div>
+              <input
+                type="name"
+                placeholder={`${seller.name}`}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+                required
+              />
             </div>
-            <input
-              type="name"
-              placeholder={`${seller.name}`}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
-              required
-            />
-          </div>
-          <div className="w-[100%] flex items-center flex-col 800px:w-[50%] mt-5">
-            <div className="w-full pl-[3%]">
-              <label className="block pb-2">Shop description</label>
-            </div>
-            <input
-              type="name"
-              placeholder={`${
-                seller?.description
+            <div className="w-[100%] flex items-center flex-col 800px:w-[50%] mt-5">
+              <div className="w-full pl-[3%]">
+                <label className="block pb-2">Shop description</label>
+              </div>
+              <input
+                type="name"
+                placeholder={`${seller?.description
                   ? seller.description
                   : "Enter your shop description"
-              }`}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
-            />
-          </div>
-          <div className="w-[100%] flex items-center flex-col 800px:w-[50%] mt-5">
-            <div className="w-full pl-[3%]">
-              <label className="block pb-2">Shop Address</label>
+                  }`}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+              />
             </div>
-            <input
-              type="name"
-              placeholder={seller?.address}
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
-              required
-            />
-          </div>
-
-          <div className="w-[100%] flex items-center flex-col 800px:w-[50%] mt-5">
-            <div className="w-full pl-[3%]">
-              <label className="block pb-2">Shop Phone Number</label>
+            <div className="w-[100%] flex items-center flex-col 800px:w-[50%] mt-5">
+              <div className="w-full pl-[3%]">
+                <label className="block pb-2">Shop Address</label>
+              </div>
+              <input
+                type="name"
+                placeholder={seller?.address}
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+                required
+              />
             </div>
-            <input
-              type="number"
-              placeholder={seller?.phoneNumber}
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
-              required
-            />
-          </div>
 
-          <div className="w-[100%] flex items-center flex-col 800px:w-[50%] mt-5">
-            <div className="w-full pl-[3%]">
-              <label className="block pb-2">Shop Zip Code</label>
+            <div className="w-[100%] flex items-center flex-col 800px:w-[50%] mt-5">
+              <div className="w-full pl-[3%]">
+                <label className="block pb-2">Shop Phone Number</label>
+              </div>
+              <input
+                type="number"
+                placeholder={seller?.phoneNumber}
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+                required
+              />
             </div>
-            <input
-              type="number"
-              placeholder={seller?.zipCode}
-              value={zipCode}
-              onChange={(e) => setZipcode(e.target.value)}
-              className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
-              required
-            />
-          </div>
 
-          <div className="w-[100%] flex items-center flex-col 800px:w-[50%] mt-5">
-            <input
-              type="submit"
-              value="Update Shop"
-              className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
-              required
-              readOnly
-            />
-          </div>
-        </form>
+            <div className="w-[100%] flex items-center flex-col 800px:w-[50%] mt-5">
+              <div className="w-full pl-[3%]">
+                <label className="block pb-2">Shop Zip Code</label>
+              </div>
+              <input
+                type="number"
+                placeholder={seller?.zipCode}
+                value={zipCode}
+                onChange={(e) => setZipcode(e.target.value)}
+                className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+                required
+              />
+            </div>
+
+
+
+            <div className="w-[100%] flex items-center cursor-pointer flex-col 800px:w-[50%] mt-5">
+              <input
+                type="submit"
+                value="Update Shop"
+                className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+                required
+                readOnly
+              />
+            </div>
+          </form>
+        )}
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ import Logo from '../../Layout/Logo';
 
 const Header = () => {
   const { user } = useSelector((state) => state.user);
+  const { seller } = useSelector((state) => state.user);
 
   const iconSize = 30;
   const iconColor = '#555';
@@ -30,7 +31,7 @@ const Header = () => {
   return (
     <div className="w-full h-[50px] bg-white shadow sticky top-0 left-0 z-30 flex items-center justify-between px-4">
       <div>
-        <Logo/>
+        <Logo />
       </div>
       <div className="flex items-center">
         <div className="flex items-center mr-4">
