@@ -584,7 +584,7 @@ export const productData = [
   },
 ];
 
-export const footerProductLinks = [
+export const footerKhullabazzar = [
   {
     name: "About us",
     link: "/about"
@@ -607,7 +607,7 @@ export const footerProductLinks = [
   },
 ];
 
-export const footercompanyLinks = [
+export const footerShop = [
   {
     name: "Gears",
     link: "/products?category=Gears"
@@ -646,7 +646,7 @@ export const footercompanyLinks = [
   }
 ];
 
-export const footerSupportLinks = [
+export const footerSupport = [
   {
     name: "FAQ",
     link: "/faq"

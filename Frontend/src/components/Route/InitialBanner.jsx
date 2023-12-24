@@ -7,7 +7,7 @@ import BI from "../../resources/Images/BI.png"
 const InitialBanner = () => {
   return (
     <>
-      <Link to="/products" classNmae="cursor-pointer">
+      <Link to="/products" className="cursor-pointer">
         <div
           className={`relative h-[520px] w-full bg-no-repeat ${styles.commonFlex}`}
           style={{
@@ -17,13 +17,11 @@ const InitialBanner = () => {
 
           }}
         >
-          <Link to="/products" className="inline-block">
-            <div className={`${styles.button} mt-5`}>
-              <span className="flex text-[#000000] bg-white font-[Poppins] text-[18px] ml-auto border-2 border-black hover:text-white hover:bg-black ">
-                Shop Now
-              </span>
-            </div>
-          </Link>
+          <div className={`${styles.button} mt-5`}>
+            <span className="flex text-[#000000] bg-white font-[Poppins] text-[18px] ml-auto border-2 border-black hover:text-white hover:bg-black ">
+              Shop Now
+            </span>
+          </div>
         </div>
       </Link>
     </>

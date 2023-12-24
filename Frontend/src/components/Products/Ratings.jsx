@@ -3,6 +3,20 @@ import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { BsStarHalf } from "react-icons/bs";
 
 const Ratings = ({ rating }) => {
+  const ratingStar = Array.from({ length: 5 }, (elem, index) => {
+    let number = index + 5;
+    return (
+      <span key={index}>
+        {rating >= index + 1 ? (
+          <AiFillStar className="mr-2 cursor-pointer" />
+        ) : rating >= number ? (
+          <BsStarHalf className="mr-2 cursor-pointer" />
+        ) : (
+          <AiOutlineStar className="mr-2 cursor-pointer" />
+        )}
+      </span>
+    )
+  })
   const stars = [];
 
   for (let i = 1; i <= 5; i++) {
@@ -35,7 +49,7 @@ const Ratings = ({ rating }) => {
       );
     }
   }
-  return <div className="flex"> {stars}</div>;
+  return <div className="flex"> {ratingStar}</div>;
 };
 
 export default Ratings;

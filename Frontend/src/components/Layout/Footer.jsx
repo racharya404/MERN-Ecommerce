@@ -7,31 +7,32 @@ import {
 } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import {
-  footercompanyLinks,
-  footerProductLinks,
-  footerSupportLinks,
+  footerShop,
+  footerKhullabazzar,
+  footerSupport,
 } from "../../static/data";
 import BackToTop from "../../components/Layout/BackToTop.jsx";
 
-const socialMediaIcons = [
-  <AiFillFacebook size={30} className="cursor-pointer" />,
-  <AiFillInstagram size={30} style={{ marginLeft: "15px", cursor: "pointer" }} />,
-  <AiFillYoutube size={30} style={{ marginLeft: "15px", cursor: "pointer" }} />,
-  <AiOutlineTwitter size={30} style={{ marginLeft: "15px", cursor: "pointer" }} />,
+const footerLinks = [
+  { title: "Customer Care", links: footerSupport },
+  { title: "Our Shop", links: footerShop },
+  { title: "KhullaBazzar", links: footerKhullabazzar },
 ];
+
+const socialMediaIcons = [
+  <AiFillFacebook key="facebook" size={30} className="cursor-pointer" />,
+  <AiFillInstagram key="instagram" size={30} className="ml-[15px] cursor-pointer" />,
+  <AiFillYoutube key="youtube" size={30} className="ml-[15px] cursor-pointer" />,
+  <AiOutlineTwitter key="twitter" size={30} className="ml-[15px] cursor-pointer" />,
+];
+
 
 const Footer = () => {
   return (
-    <div className="bg-[#232F3E] text-white">
-      <div>
-        <BackToTop />
-      </div>
+    <div className="bg-[#232F3E] text-white">q
+      <BackToTop />
       <div className="grid grid-cols-1 sm:gird-cols-3 lg:grid-cols-4 gap-6 sm:px-8 px-3 py-5 sm:text-center">
-        {[
-          { title: "Customer Care", links: footerSupportLinks },
-          { title: "Our Shop", links: footercompanyLinks },
-          { title: "KhullaBazzar", links: footerProductLinks },
-        ].map((section, index) => (
+        {footerLinks.map((section, index) => (
           <ul key={index} className="text-center sm:text-start">
             <h1 className="mb-1 font-semibold">{section.title}</h1>
             {section.links.map((link, linkIndex) => (

@@ -63,6 +63,7 @@ const EventCard = ({ active, data }) => {
               src={`${i?.url}`}
               alt=""
               className="h-[120px] overflow-hidden mr-3 "
+              key={index}
             />
           ))}
       </div>
@@ -98,7 +99,7 @@ const EventCard = ({ active, data }) => {
           <div className={redundantStyles}>See Details</div>
         </Link>
         <div className={redundantStyles} onClick={() => addToCartHandler(data)}>
-        Add to cart<AiOutlineShoppingCart className="ml-1"/>
+          Add to cart<AiOutlineShoppingCart className="ml-1" />
         </div>
         <div className="ml-auto">
           {click ? (
