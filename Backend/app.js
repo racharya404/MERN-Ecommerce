@@ -6,8 +6,10 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 app.use(cors({
-  origin: ['http://localhost:3000',],
+  origin: 'https://mern-ecommerce-frontend-bay.vercel.app',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
+  allowedHeaders: 'Content-Type,Authorization',
 }));
 
 app.use(express.json());

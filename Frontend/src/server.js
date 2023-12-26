@@ -1,5 +1,5 @@
-export const server = "http://localhost:8848/api/v2";
+export const server = "https://mern-ecommerce-backend-chi.vercel.app/api/v2";
 
-export const backend_url = "http://localhost:8848/";
+export const backend_url = "https://mern-ecommerce-backend-chi.vercel.app/";
 
 

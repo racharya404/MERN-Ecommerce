@@ -42,7 +42,7 @@ router.post("/create-shop", catchAsyncErrors(async (req, res, next) => {
     const activationToken = createActivationToken(seller);
 
     // Send activation email
-    const activationUrl = `http://localhost:3000/seller/activation/${activationToken}`;
+    const activationUrl = `https://mern-ecommerce-frontend-bay.vercel.app/seller/activation/${activationToken}`;
     await deliverMail({
       email: seller.email,
       subject: "Activate your Shop",

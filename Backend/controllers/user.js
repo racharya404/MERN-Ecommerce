@@ -24,7 +24,7 @@ router.post("/create-user", catchAsyncErrors(async (req, res, next) => {
     const user = { email, name, password, avatar: { public_id: myCloud.public_id, url: myCloud.secure_url } };
 
     const activationToken = createActivationToken(user);
-    const activationUrl = `http://localhost:3000/activation/${activationToken}`;
+    const activationUrl = `https://mern-ecommerce-frontend-bay.vercel.app/activation/${activationToken}`;
 
     await deliverMail({ email: user.email, subject: "Activate your account", message: `Hello ${user.name}, please click on the link to activate your account: ${activationUrl}` });
 
