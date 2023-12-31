@@ -29,7 +29,7 @@ const socialMediaIcons = [
 
 const Footer = () => {
   return (
-    <div className="bg-[#232F3E] text-white">q
+    <div className="bg-[#232F3E] text-white">
       <BackToTop />
       <div className="grid grid-cols-1 sm:gird-cols-3 lg:grid-cols-4 gap-6 sm:px-8 px-3 py-5 sm:text-center">
         {footerLinks.map((section, index) => (
