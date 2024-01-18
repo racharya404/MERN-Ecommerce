@@ -154,7 +154,7 @@ const Header = ({ activeHeading }) => {
                 ) : (
                   <Link to="/login">
                     <button
-                      className="group relative w-[35px] h-[35px] flex p-1 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                      className="group relative w-[55px] h-[35px] flex p-1 border border-transparent text-sm font-medium rounded-md text-white bg-[#2f3944] hover:bg-[#000000]"
                     >
                       Login | SignUp
                     </button>
