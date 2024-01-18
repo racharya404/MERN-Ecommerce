@@ -153,7 +153,11 @@ const Header = ({ activeHeading }) => {
                   </Link>
                 ) : (
                   <Link to="/login">
-                    <CgProfile size={30} color="rgb(255 255 255 / 83%)" />
+                    <button
+                      className="group relative w-[35px] h-[35px] flex p-1 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                    >
+                      Login | SignUp
+                    </button>
                   </Link>
                 )}
               </div>
